@@ -1,0 +1,77 @@
+---
+- name: Ansible EC2 launch
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  tags: provisioning
+
+  vars:
+    keypair: practice-key
+    instance_type: t2.small
+    region: us-east-1
+    security_group: my-security_group
+    wait: yes
+
+    # Windows Server Image (adjust as needed, example is for Windows Server 2019)
+    windows_ami: ami-007a8c6e3de28d435  # Example AMI for Windows Server 2019 in us-east-1
+    centos_ami: ami-0c15e602d3d6c6c4a  # Example AMI for CentOS 9 in us-east-1
+    ubuntu_ami: ami-084568db4383264d4  # Example AMI for Ubuntu 24.04 in us-east-1
+
+  tasks:
+    - name: Configuring security group for the instances
+      ec2_group:
+        name: "{{ security_group }}"
+        description: my-security_group
+        region: "{{ region }}"
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 8080
+            to_port: 8080
+            cidr_ip: 0.0.0.0/0
+        rules_egress:
+          - proto: all
+            cidr_ip: 0.0.0.0/0
+
+    - name: Creating Windows Server EC2 instance
+      ec2_instance:
+        security_group: "{{ security_group }}"
+        name: "windows-server-instance"
+        key_name: "{{ keypair }}"
+        instance_type: "{{ instance_type }}"
+        image_id: "{{ windows_ami }}"
+        region: "{{ region }}"
+        wait: "{{ wait }}"
+        tags:
+          Name: "windows-server-instance"
+    
+    - name: Creating CentOS EC2 instance
+      ec2_instance:
+        security_group: "{{ security_group }}"
+        name: "centos-instance"
+        key_name: "{{ keypair }}"
+        instance_type: "{{ instance_type }}"
+        image_id: "{{ centos_ami }}"
+        region: "{{ region }}"
+        wait: "{{ wait }}"
+        tags:
+          Name: "centos-instance"
+    
+    - name: Creating Ubuntu EC2 instance
+      ec2_instance:
+        security_group: "{{ security_group }}"
+        name: "ubuntu-instance"
+        key_name: "{{ keypair }}"
+        instance_type: "{{ instance_type }}"
+        image_id: "{{ ubuntu_ami }}"
+        region: "{{ region }}"
+        wait: "{{ wait }}"
+        tags:
+          Name: "ubuntu-instance"
