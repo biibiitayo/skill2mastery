@@ -1,6 +1,9 @@
 
 Deploy AWS Three-Tier Web in a Single AZ
 
+![image](https://github.com/user-attachments/assets/a642658b-c36d-4f8a-b09f-d1712d8cdf6f)
+
+
 Development VPC.
 
 ![image](https://github.com/user-attachments/assets/0a165127-a449-4ee8-8075-5dba32e23a13)
