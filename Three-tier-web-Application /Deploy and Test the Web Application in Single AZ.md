@@ -18,7 +18,10 @@ The DevWebTier was deployed in a public subnet, allowing for public internet acc
 
 
 
-The security group for the DevWebTier EC2 instance allows incoming HTTP/HTTPS traffic (ports 80) from the internet.
+The security group for the Development
+
+![image](https://github.com/user-attachments/assets/093bd32d-5d04-410d-bfe1-b4998f79d3ef)
+
 
 Dev-dbserver and DevAppLayer are placed in the private subnet with no public IP.	
 ![image](https://github.com/user-attachments/assets/b7d02bdc-40bd-4f85-b48c-0efad4e1723f)
